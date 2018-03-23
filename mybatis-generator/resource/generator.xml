@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<!-- 引入配置文件 -->  
+    <properties resource="generator.properties"/>
+    
+    <!-- 数据库驱动包位置 -->
+    <classPathEntry location="${jar.location}" />
+    <!-- <classPathEntry location="C:\oracle\product\10.2.0\db_1\jdbc\lib\ojdbc14.jar" />-->
+    <context id="MyBatis" targetRuntime="MyBatis3">
+     	<!-- 自动生成toString方法 -->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <!-- 自动生成equals方法和hashcode方法 -->
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+	    <!-- 实现自定义的代码生成器plugin -->
+	    <plugin type="${plugin}" />
+    		<!-- 生成注释 -->
+        <commentGenerator type="${commentGenerator}"></commentGenerator>
+        <!-- <commentGenerator>
+        		是否取消注释
+            <property name="suppressAllComments" value="true" />
+            	是否生成注释代时间戳 
+            <property name="suppressDate" value="true" />
+        </commentGenerator> -->
+        <!-- 数据库链接URL、用户名、密码 -->
+         <jdbcConnection driverClass="com.mysql.jdbc.Driver" 
+         connectionURL="${jdbc.url}"
+         userId="${jdbc.user}" password="${jdbc.password}">
+        <!--<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@localhost:1521:orcl" userId="msa" password="msa">-->
+        </jdbcConnection>
+        <!-- 类型转换 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <!-- 生成模型的包名和位置 -->
+        <javaModelGenerator targetPackage="${package.bean}" targetProject="${project}">
+            <property name="enableSubPackages" value="true" />
+             <!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+            <!-- <property name="trimStrings" value="true" /> -->
+        </javaModelGenerator>
+        <!-- 生成的映射文件包名和位置 -->
+        <sqlMapGenerator targetPackage="${package.mapper}" targetProject="${project}">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!-- 生成DAO的包名和位置 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${package.dao}" targetProject="${project}">
+            <property name="enableSubPackages" value="true" />
+           <!--  <property name="rootInterface" value="${rootInterface.dao}"/> -->
+        </javaClientGenerator>
+        <!-- 要生成那些表(更改tableName和domainObjectName就可以) -->
+        <table tableName="${tableName}" domainObjectName="${domainObjectName}"
+        		mapperName="${mapperName}"
+        		enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >
+        	<property name="rootClass" value="${rootClass.entity}"/>
+        	
+        	<!-- 忽略列，不生成bean 字段 -->
+           <!--  <ignoreColumn column="FRED" /> -->
+            <!-- 指定列的java数据类型 -->
+           <!--  <columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR" /> -->
+        </table>
+    </context>
+</generatorConfiguration>
